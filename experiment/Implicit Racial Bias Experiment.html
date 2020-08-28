@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Implicit Racial Bias Experiment</title>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-animation.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-slider-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-slider-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body></body>
+  <script>
+
+    var timeline = [];
+
+    // generate a random subject ID with 15 characters
+    var subject_id = jsPsych.randomization.randomID(15);
+// this adds a property called 'subject' to every trial
+        jsPsych.data.addProperties({
+        subject: subject_id
+        });
+
+    var welcome = {
+      type: "html-keyboard-response",
+      stimulus: "Welcome to Nathan's racial bias experiment! Press any key to begin."
+    };
+    timeline.push(welcome);
+
+
+    var instructions = {
+      type: "html-keyboard-response",
+      stimulus: "<p>In this experiment, two faces will be shown " +
+          "in sequence.</p><p>You will be asked whether the second " +
+          "face was <strong>darker</strong> or <strong>lighter</strong> " +
+          "than the first.</p><p>Then, you will be asked <strong>how confident</strong> " +
+          "you are about the acccuracy of your response.</p>" +
+          "<div style='width: 700px;'>"+
+          "</div>"+
+          "<p>The experiment consists of many trials. Press the <strong>space bar</strong> "+
+          " to begin.</p>",
+      choices: [32],
+      post_trial_gap: 750
+    };
+    timeline.push(instructions);
+
+    var irbtest = {
+    timeline: [
+			{
+				type: 'animation',
+				stimuli: jsPsych.timelineVariable('faces'),
+				width: 800,
+        frame_time: 750,
+        frame_isi: 750,
+				choices: jsPsych.NO_KEYS,
+
+			},
+			{
+        type: "html-button-response",
+        stimulus: "Was the second face <strong>darker</strong> or " +
+        "<strong>lighter</strong> than the first face?",
+        stimulus_height: 1,
+        choices: ['DARKER', 'LIGHTER'],
+			},
+      {
+        type: 'html-slider-response',
+        stimulus: '<p>How confident are you in your previous response?</p>',
+        labels: ['Not Confident', 'Neutral', 'Very Confident'],
+    }
+		],
+		timeline_variables: [
+			{ faces: ["img/BB1.jpg", "img/WW1.jpg"] },
+      { faces: ["img/BB2.jpg", "img/WW2.jpg"] },
+      { faces: ["img/NN3.jpg", "img/NN5.jpg"] },
+      { faces: ["img/BW3.jpg", "img/WW5.jpg"] },
+      { faces: ["img/WW3.jpg", "img/BW6.jpg"] },
+
+		],
+		randomize_order: true,
+    	repetitions: 1
+	}
+	timeline.push(irbtest);
+
+    var debrief_block = {
+      type: "html-keyboard-response",
+      stimulus: function() {
+
+        var trials = jsPsych.data.get().filter({test_part: 'test'});
+        var correct_trials = trials.filter({correct: true});
+        var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+        var rt = Math.round(correct_trials.select('rt').mean());
+
+        return "<p>You responded correctly on "+accuracy+"% of the trials.</p>"+
+        "<p>Your average response time was "+rt+"ms.</p>"+
+        "<p>Press any key to complete the experiment. Thank you!</p>";
+
+      }
+    };
+    timeline.push(debrief_block);
+
+    /* start the experiment */
+    jsPsych.init({
+      timeline: timeline,
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+  </script>
+</html>
