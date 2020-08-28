@@ -2,15 +2,18 @@
 <html>
   <head>
     <title>Implicit Racial Bias Experiment</title>
-    <script src="jspsych-6.1.0/jspsych.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-animation.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-image-slider-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-html-slider-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-image-button-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
-    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/jspsych.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-animation.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-image-slider-response.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-html-slider-response.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-image-button-response.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-html-button-response.js"></script>
+    <script src="https://ncfisherim.in/jsPsychSheet/jspsych/plugins/jspsych-image-keyboard-response.js"></script>
+    <link href="https://ncfisherim.in/jsPsychSheet/jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+	<!-- jsPsychSheet library -->
+	<script src="https://ncfisherim.in/jsPsychSheet/jspsychsheet.js"></script>
+	<link rel="stylesheet" href="https://ncfisherim.in/jsPsychSheet/jspsychsheet.css">	
   </head>
   <body></body>
   <script>
@@ -103,10 +106,11 @@
 
     /* start the experiment */
     jsPsych.init({
-      timeline: timeline,
-      on_finish: function() {
-        jsPsych.data.displayData();
-      }
-    });
+  timeline: timeline,
+  show_progress_bar: true,
+  on_finish: function() {
+      jsPsychSheet.uploadData(jsPsych.data.get().csv());
+  }
+});
   </script>
 </html>
