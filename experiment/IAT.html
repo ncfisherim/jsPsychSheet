@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IAT</title>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsych/jspsych.js"></script>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsych/plugins/jspsych-image-button-response.js"></script>
+        <link href="https://ncfisherim.github.io/jsPsychSheet/jspsych/plugins/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsych/plugins/jspsych-iat-image.js"></script>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsych/plugins/jspsych-iat-html.js"></script>
+        <link href="https://ncfisherim.github.io/jsPsychSheet/jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <script src="https://ncfisherim.github.io/jsPsychSheet/jspsychsheet.js"></script>
+      	<link rel="stylesheet" href="https://ncfisherim.github.io/jsPsychSheet/jspsychsheet.css">
+        </head>
+        <body></body>
+        <script>
+
+          /* create timeline */
+          var timeline = [];
+
+          /* define welcome message trial */
+          var welcome = {
+            type: "html-keyboard-response",
+            stimulus: "Welcome to Nathan's version of the IAT. Press any key to begin."
+          };
+
+          var initialinstructions = {
+            type: "image-button-response",
+            stimulus: "img/table.png",
+            stimulus_height: 300,
+            choices: ['Continue'],
+            prompt: "<p>First, you will use the 'E' and 'I' computer keys " +
+              "to categorize items into groups as fast as you can.</p>" +
+              "<p>Above are the four groups and the items that belong to each.</p>" +
+              "<p>There are seven parts.  The instructions change for each part," +
+              " so pay attention!</p>",
+          };
+
+          /* define instructions trial */
+          var instructions_block1 = {
+            type: "html-keyboard-response",
+            stimulus: "<p><u>Part 1 of 7</u></p><br>" +
+              "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Black people</strong></p></div>" +
+              "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>White people</strong></p></div>" +
+              "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Put a left finger on the" +
+              " <strong>E</strong> key for items that belong to the category <strong>Black people</strong>.<br>Put a right" +
+              " finger on the <strong>I</strong> key for items that belong to the category <strong>White people</strong>.</p>" +
+              "<p>Items will appear one at a time.  If you make a mistake, a red X will appear.  Press the other key " +
+              "to continue.<br><br><u>Go as fast as you can</u> while being accurate.<br><br> " +
+              "Press the <strong>space bar</strong> when you are ready to start.</div>",
+            choices: [32],
+            post_trial_gap: 250
+          };
+
+          var trial_block1 = {
+            timeline: [
+              {
+                type: 'iat-image',
+                stimulus: jsPsych.timelineVariable('stimulus'),
+                stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                bottom_instructions: '<p>If you make a mistake, a red X will appear. Press the other key to continue.</p>',
+                force_correct_key_press: true,
+                display_feedback: true,
+                trial_duration: 3000, //Only if display_feedback is false
+                left_category_key: 'E',
+                right_category_key: 'I',
+                left_category_label: ['Black people'],
+                right_category_label: ['White people'],
+                response_ends_trial: true,
+                data: { iat_type: 'practice' }
+              }
+            ],
+            timeline_variables: [
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "left"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "right"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "right"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "right"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "right"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "right"},
+              {stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "right"}
+            ],
+            randomize_order: true,
+            repetitions: 2
+          };
+
+          var instructions_block2 = {
+            type: "html-keyboard-response",
+            stimulus: "<p><u>Part 2 of 7</u></p><br>" +
+              "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Bad</strong></p></div>" +
+              "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>Good</strong></p></div>" +
+              "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Put a left finger on the" +
+              " <strong>E</strong> key for items that belong to the category <strong>Bad</strong>.<br>Put a right" +
+              " finger on the <strong>I</strong> key for items that belong to the category <strong>Good</strong>.</p>" +
+              "<p>Items will appear one at a time.  If you make a mistake, a red X will appear.  Press the other key " +
+              "to continue.</p><u>Go as fast as you can</u> while being accurate.<br><br> " +
+              "Press the <strong>space bar</strong> when you are ready to start.</div>",
+            choices: [32],
+            post_trial_gap: 250
+          };
+
+          var trial_block2 = {
+            timeline: [
+              {
+                type: 'iat-html',
+                stimulus: jsPsych.timelineVariable('stimulus'),
+                stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                bottom_instructions: '<p>If you make a mistake, a red X will appear. Press the other key to continue.</p>',
+                force_correct_key_press: true,
+                display_feedback: true,
+                trial_duration: 3000, //Only if display_feedback is false
+                left_category_key: 'E',
+                right_category_key: 'I',
+                left_category_label: ['Bad'],
+                right_category_label: ['Good'],
+                response_ends_trial: true,
+                data: { iat_type: 'practice' }
+              }
+            ],
+            timeline_variables: [
+              {stimulus: "Despise", stim_key_association: "left"},
+              {stimulus: "Hurtful", stim_key_association: "left"},
+              {stimulus: "Tragic", stim_key_association: "left"},
+              {stimulus: "Bothersome", stim_key_association: "left"},
+              {stimulus: "Gross", stim_key_association: "left"},
+              {stimulus: "Angry", stim_key_association: "left"},
+              {stimulus: "Rotten", stim_key_association: "left"},
+              {stimulus: "Selfish", stim_key_association: "left"},
+              {stimulus: "Pleasure", stim_key_association: "right"},
+              {stimulus: "Magnificent", stim_key_association: "right"},
+              {stimulus: "Terrific", stim_key_association: "right"},
+              {stimulus: "Joyous", stim_key_association: "right"},
+              {stimulus: "Delightful", stim_key_association: "right"},
+              {stimulus: "Fantastic", stim_key_association: "right"},
+              {stimulus: "Laughing", stim_key_association: "right"},
+              {stimulus: "Love", stim_key_association: "right"}
+            ],
+            randomize_order: true,
+            repetitions: 2
+          };
+
+          var instructions_block3 = {
+            type: "html-keyboard-response",
+            stimulus: "<p><u>Part 3 of 7</u></p><br>" +
+              "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Bad</strong> or <strong>Black people</strong></p></div>" +
+              "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>Good</strong> or <strong>White people</strong></p></div>" +
+              "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use the <strong>E</strong> key " +
+              "for <strong>Black people</strong> and for <strong>Bad</strong>.<br>Use the <strong>I</strong> key for <strong>White" +
+              " people</strong> and for <strong>Good</strong>.</p><p>Each item belongs to only one category.</p>" +
+              "<p>If you make a mistake, a red X will appear.  Press the other key to continue.</p><p><u>Go as fast as you can</u>" +
+              " while being accurate.<br><br>Press the <strong>space bar</strong> when you are ready to start.</div>",
+            choices: [32],
+            post_trial_gap: 250
+          };
+
+          var trial_block3 = {
+            timeline: [
+              {
+                type: jsPsych.timelineVariable('type'),
+                stimulus: jsPsych.timelineVariable('stimulus'),
+                stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue.</p>',
+                force_correct_key_press: true,
+                display_feedback: true,
+                trial_duration: 3000, //Only if display_feedback is false
+                left_category_key: 'E',
+                right_category_key: 'I',
+                left_category_label: ['Bad', 'Black people'],
+                right_category_label: ['Good', 'White people'],
+                response_ends_trial: true,
+                data: { iat_type: 'practice' }
+              }
+            ],
+            timeline_variables: [
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Despise", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Hurtful", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Tragic", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Bothersome", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Gross", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Angry", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Rotten", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Selfish", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Pleasure", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Magnificent", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Terrific", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Joyous", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Delightful", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Fantastic", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Laughing", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Love", stim_key_association: "right"}
+            ],
+            randomize_order: true,
+            repetitions: 1
+          };
+
+          var instructions_block4 = {
+            type: "html-keyboard-response",
+            stimulus: "<p><u>Part 4 of 7</u></p><br>" +
+              "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Bad</strong> or <strong>Black people</strong></p></div>" +
+              "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>Good</strong> or <strong>White people</strong></p></div>" +
+              "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>This is the same as the previous part.<br>" +
+              "Use the <strong>E</strong> key for <strong>Black people</strong> and for <strong>Bad</strong>.<br>Use the <strong>I</strong>" +
+              " key for <strong>Black people</strong> and for <strong>Good</strong>.</p><p>Each item belongs to only one category.</p>" +
+              "<p><u>Go as fast as you can</u> while being accurate.<br><br>Press the <strong>space bar</strong> when you are ready to start.</div>",
+            choices: [32],
+            post_trial_gap: 250
+          };
+
+          var trial_block4 = {
+            timeline: [
+              {
+                type: jsPsych.timelineVariable('type'),
+                stimulus: jsPsych.timelineVariable('stimulus'),
+                stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue.</p>',
+                force_correct_key_press: true,
+                display_feedback: true,
+                trial_duration: 3000, //Only if display_feedback is false
+                left_category_key: 'E',
+                right_category_key: 'I',
+                left_category_label: ['Bad', 'Black people'],
+                right_category_label: ['Good', 'White people'],
+                response_ends_trial: true,
+                data: { iat_type: 'practice' }
+              }
+            ],
+            timeline_variables: [
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "left"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "right"},
+              {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Despise", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Hurtful", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Tragic", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Bothersome", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Gross", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Angry", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Rotten", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Selfish", stim_key_association: "left"},
+              {type: 'iat-html', stimulus: "Pleasure", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Magnificent", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Terrific", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Joyous", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Delightful", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Fantastic", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Laughing", stim_key_association: "right"},
+              {type: 'iat-html', stimulus: "Love", stim_key_association: "right"}
+            ],
+            randomize_order: true,
+            repetitions: 1
+          };
+
+          var instructions_block5 = {
+             type: 'html-keyboard-response',
+             stimulus: "<u>Part 5 of 7</u>" +
+             "<div style='position: absolute; top: 18%; left: 20%'>Press E for:<br>" + "<strong>White people</strong></div>" +
+             "<div style='position: absolute; top: 18%; right: 20%'>Press I for:<br>" + "<strong>Black people</strong></div>" +
+             "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'><b>Watch out, the labels have changed positions!</b><br>" +
+             "Use the left finger on the <strong>E</strong> key for White People<br>" + "Use the right finger on the <strong>I</strong> key " +
+             "for Black People<br><br><u>Go as fast as you can while being accurate.</u><br><br> " +
+             "Press the <strong>space bar</strong> when you are ready to start.</div>",
+             choices: [32],
+             post_trial_gap: 250
+           };
+
+           var trial_block5 = {
+             timeline: [
+               {
+                 type: 'iat-image',
+                 is_html: false,
+                 stimulus: jsPsych.timelineVariable('stimulus'),
+                 stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                 html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                 bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+                 force_correct_key_press: true,
+                 display_feedback: true,
+                 trial_duration: 3000, //Only if display_feedback is false
+                 left_category_key: 'E',
+                 right_category_key: 'I',
+                 left_category_label: ['White people'],
+                 right_category_label: ['Black people'],
+                 response_ends_trial: true,
+                 data: { iat_type: 'practice' }
+               }
+             ],
+             timeline_variables: [
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "left"}
+             ],
+             randomize_order: true,
+             repetitions: 2
+           };
+
+           var instructions_block6 = {
+             type: "html-keyboard-response",
+             stimulus: "<p><u>Part 6 of 7</u></p><br>" +
+               "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Bad</strong> or <strong>White people</strong></p></div>" +
+               "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>Good</strong> or <strong>Black people</strong></p></div>" +
+               "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use the <strong>E</strong> key " +
+               "for <strong>White people</strong> and for <strong>Bad</strong>.<br>Use the <strong>I</strong> key for <strong>Black" +
+               " people</strong> and for <strong>Good</strong>.</p><p>Each item belongs to only one category.</p>" +
+               "<p>If you make a mistake, a red X will appear.  Press the other key to continue.</p><p><u>Go as fast as you can</u>" +
+               " while being accurate.<br><br>Press the <strong>space bar</strong> when you are ready to start.</div>",
+             choices: [32],
+             post_trial_gap: 250
+           };
+
+           var trial_block6 = {
+             timeline: [
+               {
+                 type: jsPsych.timelineVariable('type'),
+                 stimulus: jsPsych.timelineVariable('stimulus'),
+                 stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                 html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                 bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue.</p>',
+                 force_correct_key_press: true,
+                 display_feedback: true,
+                 trial_duration: 3000, //Only if display_feedback is false
+                 left_category_key: 'E',
+                 right_category_key: 'I',
+                 left_category_label: ['Bad', 'White people'],
+                 right_category_label: ['Good', 'Black people'],
+                 response_ends_trial: true,
+                 data: { iat_type: 'practice' }
+               }
+             ],
+             timeline_variables: [
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Despise", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Hurtful", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Tragic", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Bothersome", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Gross", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Angry", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Rotten", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Selfish", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Pleasure", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Magnificent", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Terrific", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Joyous", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Delightful", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Fantastic", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Laughing", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Love", stim_key_association: "right"}
+             ],
+             randomize_order: true,
+             repetitions: 1
+           };
+
+           var instructions_block7 = {
+             type: "html-keyboard-response",
+             stimulus: "<p><u>Part 7 of 7</u></p><br>" +
+               "<div style='position: absolute; top: 18%; left: 20%'><p>Press E for:<br><strong>Bad</strong> or <strong>White people</strong></p></div>" +
+               "<div style='position: absolute; top: 18%; right: 20%'><p>Press I for:<br><strong>Good</strong> or <strong>Black people</strong></p></div>" +
+               "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>This is the same as the previous part.<br>Use the " +
+               "<strong>E</strong> key for <strong>White people</strong> and for <strong>Bad</strong>.<br>Use the <strong>I</strong> key for <strong>Black" +
+               " people</strong> and for <strong>Good</strong>.</p><p>Each item belongs to only one category.</p>" +
+               "<p>If you make a mistake, a red X will appear.  Press the other key to continue.</p><p><u>Go as fast as you can</u>" +
+               " while being accurate.<br><br>Press the <strong>space bar</strong> when you are ready to start.</div>",
+             choices: [32],
+             post_trial_gap: 250
+           };
+
+           var trial_block7 = {
+             timeline: [
+               {
+                 type: jsPsych.timelineVariable('type'),
+                 stimulus: jsPsych.timelineVariable('stimulus'),
+                 stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+                 html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+                 bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue.</p>',
+                 force_correct_key_press: true,
+                 display_feedback: true,
+                 trial_duration: 3000, //Only if display_feedback is false
+                 left_category_key: 'E',
+                 right_category_key: 'I',
+                 left_category_label: ['Bad', 'White people'],
+                 right_category_label: ['Good', 'Black people'],
+                 response_ends_trial: true,
+                 data: { iat_type: 'practice' }
+               }
+             ],
+             timeline_variables: [
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bm3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf1.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf2.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/bf3.jpg", stim_key_association: "right"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wm3.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf1.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf2.jpg", stim_key_association: "left"},
+               {type: 'iat-image', stimulus: "https://ncfisherim.github.io/jsPsychSheet/experiment/img/wf3.jpg", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Despise", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Hurtful", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Tragic", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Bothersome", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Gross", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Angry", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Rotten", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Selfish", stim_key_association: "left"},
+               {type: 'iat-html', stimulus: "Pleasure", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Magnificent", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Terrific", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Joyous", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Delightful", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Fantastic", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Laughing", stim_key_association: "right"},
+               {type: 'iat-html', stimulus: "Love", stim_key_association: "right"}
+             ],
+             randomize_order: true,
+             repetitions: 1
+           };
+
+
+           timeline.push(welcome);
+           timeline.push(initialinstructions);
+           timeline.push(instructions_block1);
+           timeline.push(trial_block1);
+           timeline.push(instructions_block2);
+           timeline.push(trial_block2);
+           timeline.push(instructions_block3);
+           timeline.push(trial_block3);
+           timeline.push(instructions_block4);
+           timeline.push(trial_block4);
+           timeline.push(instructions_block5);
+           timeline.push(trial_block5);
+           timeline.push(instructions_block6);
+           timeline.push(trial_block6);
+           timeline.push(instructions_block7);
+           timeline.push(trial_block7);
+
+
+          jsPsych.init({
+            timeline: timeline,
+            on_finish: function() {
+              jsPsych.data.displayData();
+            }
+          });
+        </script>
+</html>
