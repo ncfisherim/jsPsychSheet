@@ -488,5 +488,13 @@
               jsPsych.data.displayData();
             }
           });
+            
+         jsPsych.init({
+  timeline: timeline,
+  show_progress_bar: true,
+  on_finish: function() {
+      jsPsychSheet.uploadData(jsPsych.data.get().csv());
+  }
+});
         </script>
 </html>
